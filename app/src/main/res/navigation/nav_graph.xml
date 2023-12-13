@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/registrationWelcomeFragment">
+
+    <fragment
+        android:id="@+id/registrationWelcomeFragment"
+        android:name="com.example.exercise_17.fragment.RegistrationWelcomeFragment"
+        android:label="fragment_registration_welcome"
+        tools:layout="@layout/fragment_registration_welcome" >
+        <action
+            android:id="@+id/action_registrationWelcomeFragment_to_registrationRegisterFragment"
+            app:destination="@id/registrationRegisterFragment" />
+        <action
+            android:id="@+id/action_registrationWelcomeFragment_to_registrationLoginFragment"
+            app:destination="@id/registrationLoginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationRegisterFragment"
+        android:name="com.example.exercise_17.fragment.RegistrationRegisterFragment"
+        android:label="fragment_registration_register"
+        tools:layout="@layout/fragment_registration_register" />
+    <fragment
+        android:id="@+id/registrationLoginFragment"
+        android:name="com.example.exercise_17.fragment.RegistrationLoginFragment"
+        android:label="fragment_registration_login"
+        tools:layout="@layout/fragment_registration_login" />
+</navigation>
