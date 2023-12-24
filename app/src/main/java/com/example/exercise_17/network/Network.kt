@@ -1,5 +1,6 @@
 package com.example.exercise_17.network
 
+import com.example.exercise_17.service.login.LoginService
 import com.example.exercise_17.service.register.RegisterService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -19,4 +20,5 @@ object Network {
     }
 
     fun registerUserService(): RegisterService = retrofit.create(RegisterService::class.java)
+    fun loginUserService(): LoginService = retrofit.create(LoginService::class.java)
 }

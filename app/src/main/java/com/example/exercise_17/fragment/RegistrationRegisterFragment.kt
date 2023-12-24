@@ -1,19 +1,16 @@
 package com.example.exercise_17.fragment
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.exercise_17.BaseFragment
-import com.example.exercise_17.R
 import com.example.exercise_17.databinding.FragmentRegistrationRegisterBinding
 import com.example.exercise_17.viewmodel.RegisterViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class RegistrationRegisterFragment :
@@ -21,10 +18,21 @@ class RegistrationRegisterFragment :
 
     private val viewModel: RegisterViewModel by viewModels()
 
-
     override fun clickListeners() {
         binding.btnRegister.setOnClickListener {
             registerUser()
+        }
+    }
+
+    private fun showErrorMessage() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.registerFlow.collect{ it ->
+                    it?.errorMessage?.let {
+                        println(it )
+                    }
+                }
+            }
         }
     }
 
@@ -34,13 +42,29 @@ class RegistrationRegisterFragment :
         val repeatPassword = binding.etRepeatPassword.text.toString()
 
         viewModel.registerUser(email , password, repeatPassword )
+
+        showErrorMessage()
+
     }
+
+
+     private fun sentDataToLoginFragment() {
+             val email = binding.etEmail.text.toString()
+             setFragmentResult("requestKey", bundleOf("bundleKey" to email))
+
+            val password = binding.etPassword.text.toString()
+            setFragmentResult("passwordKey", bundleOf("password" to password))
+
+     }
 
     override fun bindObserves() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.registerFlow.collect{
-//                    println(it?.errorMessage)
+                viewModel.registerFlow.collect{ it ->
+                    it?.data?.let {
+                        sentDataToLoginFragment()
+                        findNavController().navigate(RegistrationRegisterFragmentDirections.actionRegistrationRegisterFragmentToRegistrationLoginFragment())
+                    }
                 }
             }
         }
@@ -76,6 +100,4 @@ class RegistrationRegisterFragment :
             }
         }
     }
-
-
 }

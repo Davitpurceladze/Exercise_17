@@ -21,10 +21,20 @@
         android:id="@+id/registrationRegisterFragment"
         android:name="com.example.exercise_17.fragment.RegistrationRegisterFragment"
         android:label="fragment_registration_register"
-        tools:layout="@layout/fragment_registration_register" />
+        tools:layout="@layout/fragment_registration_register" >
+
+        <action
+            android:id="@+id/action_registrationRegisterFragment_to_registrationLoginFragment"
+            app:destination="@id/registrationLoginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/registrationLoginFragment"
         android:name="com.example.exercise_17.fragment.RegistrationLoginFragment"
         android:label="fragment_registration_login"
         tools:layout="@layout/fragment_registration_login" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.exercise_17.fragment.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
 </navigation>
